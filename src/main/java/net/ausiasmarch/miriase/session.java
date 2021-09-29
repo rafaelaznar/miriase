@@ -39,6 +39,7 @@ public class session extends HttpServlet {
                                 out.print(oGson.toJson("Welcome"));
                             } else {
                                 if (login.equalsIgnoreCase("user") && password.equalsIgnoreCase("04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb")) { //user
+                                    oSession.setAttribute("usuario", login);
                                     response.setStatus(HttpServletResponse.SC_OK);
                                     out.print(oGson.toJson("Welcome"));
                                 } else {
@@ -57,8 +58,14 @@ public class session extends HttpServlet {
                         out.print(oGson.toJson("Session closed"));
                         break;
                     case "check":
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        out.print(oGson.toJson((String) oSession.getAttribute("usuario")));
+                        String usuario = (String) oSession.getAttribute("usuario");
+                        if (usuario!=null){
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            out.print(oGson.toJson(usuario));
+                        } else{
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            out.print(oGson.toJson("No session"));
+                        }
                         break;
                     case "get":
                         String name = (String) oSession.getAttribute("usuario");
