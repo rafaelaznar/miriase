@@ -1,2 +1,2 @@
 # miriase
-Vacío
+Servidor de autenticaciones basado en sesiones
